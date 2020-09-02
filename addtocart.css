@@ -1,0 +1,17 @@
+.navbar{
+    display: flex;
+    background-color: #ddd;
+    padding: 10px;
+    margin-bottom: 3px;
+}
+#bodyimage{
+	width:100%;
+	height:50vh;
+	background:linear-gradient(to bottom,
+	rgba(0, 0,0, 0),
+	rgba(0, 0, 0, 0)),
+url(image/bodyimage.jpg);
+background-repeat: no-repeat;
+background-position:center;
+background-size:cover;
+}

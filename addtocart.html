@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add to Cart Example</title>
+	<link rel="stylesheet" type="text/css" href="addtocart.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script >
+		$(document).ready(function(){
+      $('.row').on('click','#button',function(){
+        var name=$(this).data('name');
+        var price=$(this).data('price');
+        var image=$(this).data('image');
+        var qty=$(this).data('qty');
+        var id=$(this).data('id');
+
+        var orderitem={name:name,price:price,image:image,qty:qty ,id:id};
+        var oldOrder=localStorage.getItem('Order');
+        if(oldOrder){
+          Order=JSON.parse(oldOrder);
+        }
+        else{
+          var Order=new Array();
+        }
+        var exist;
+        $.each(Order,function(i,v){
+          if(id==v.id){
+            v.qty++;
+            exist=true;
+          }
+        })
+         if(!exist){
+          Order.push(orderitem);
+         }
+         localStorage.setItem('Order',JSON.stringify(Order));
+      })
+    })
+	</script>
+</head>
+<body>
+
+		<nav class="navbar">
+                <span style="margin-left: 40%;">
+                 C o m f y <span style="color:#c9aa2c;"> H o u s e</span>
+                </span>
+         </nav>
+
+         <div id="bodyimage"></div>
+         <h1 class="text-center">Our Product</h1>
+
+    <div class="container">
+        <div class="row">
+         		<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 y-3 text-center  p-3">
+	           		<img src="image/bed1.jpg" class="img-fluid" style="height: 250px;width: 500px;">
+	            	<h5>Sleigh bed</h5>
+	            	<P>$21</P> 
+         			<a href="" class="btn btn-danger mt-4" data-name="Sleigh-bed" data-price="21"
+         			data-image="image/bed1.jpg" data-qty="1" data-id="1" id="button" style="background-color: #1a1a1a;width: ">Add to cart</a>
+      			</div>
+      			<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 y-3 text-center  p-3">
+	           		<img src="image/bed2.jpg" class="img-fluid" style="height: 250px;width: 500px;">
+	            	<h5>Platform bed</h5>
+	            	<P>$20</P> 
+         			<a href="" class="btn btn-danger mt-4" data-name="Platform-bed" data-price="20"
+         			data-image="image/bed2.jpg" data-qty="1" data-id="2" id="button" style="background-color: #1a1a1a;width: ">Add to cart</a>
+      			</div>
+      			<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 y-3 text-center  p-3">
+	           		<img src="image/bed2.jpg" class="img-fluid" style="height: 250px;width: 500px;">
+	            	<h5>Queen-bed</h5>
+	            	<P>$20</P> 
+         			<a href="" class="btn btn-danger mt-4" data-name="Queen-bed" data-price="20"
+         			data-image="image/bed2.jpg" data-qty="1" data-id="3" id="button" style="background-color: #1a1a1a;width: ">Add to cart</a>
+      			</div>
+
+		</div>
+		<a href="shoopingcart.html" class="btn btn-danger mt-4" style="background-color: #1a1a1a; width: 15%; height: 5%">Shopping Cart</a>
+	</div>
+</body>
+</html>

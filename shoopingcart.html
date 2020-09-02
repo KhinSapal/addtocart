@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>cart</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/Bootstrap.bundle.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			getData();
+	        
+	        localStorage.setItem('Order',JSON.stringify(Order));
+	        getData();
+			     
+           $('.book').click(function () {
+             alert('Booking Success');
+           })
+
+		        function getData() 
+            {	
+                var result="";
+                var lsd=localStorage.getItem('Order');
+                if (lsd){
+                    Order=JSON.parse(lsd);
+                   
+                    var total=0;
+                    $.each(Order,function (i,v) {
+                        var subtotal=v.price*v.qty;
+                        total+=subtotal;
+                        result+=`
+                            <tr> 
+                                <td> ${v.id} </td>
+                                <td> <img src="${v.image}" width="50px" height="50">
+                                ${v.name} </td>
+                                <td> ${v.price} </td>
+                                <td> 
+                                    <button data-id="${i}" data-qty="${v.qty}" class="plus">+</button>
+                                    <input type="text"  id="qty"  value="${v.qty}"
+                                    style="width:30px; text-align:center;">
+                                    <button data-id="${i}" class="minus" data-qty="${v.qty}">-</tutton>
+                                </td>
+                                <td> ${subtotal} </td>
+                                <td><button class="btndelete" data-id="${i}">Delete</button></td>
+                            </tr>`;
+                    })
+                    result+=`<tr>
+                        <td colspan=3>Total</td>
+                        <td colspan=3>${total}</td>
+                            </tr>`;
+                    
+                }
+                else
+                {
+                    result+=`<tr> <td colspan=6>Cart is empty</td></tr>`;
+                }
+                $('.tbody').html(result);
+            }
+
+            $('.tbody').on('click','.btndelete',function()
+            { 
+                var id=$(this).data(id);
+                var lsd=localStorage.getItem('Order');
+                Order=JSON.parse(lsd);
+                Order.splice(id,1);
+                
+                localStorage.setItem('Order',JSON.stringify(Order));
+                getData();
+            })
+
+            $('.tbody').on('click','.plus',function () 
+            {
+              var id=$(this).data('id');
+              var qty=parseInt($(this).data('qty'));
+
+              console.log(qty);
+              qty++;
+              var lsd=localStorage.getItem('Order');
+                Order=JSON.parse(lsd);
+                $.each(Order,function (i,v) 
+                {
+                    if( i==id)
+                    {
+                        v.qty=qty;
+                    }
+                    
+                })
+                if(qty<=0)
+                {
+                    Order.splice(id,1);
+                }
+                localStorage.setItem('Order',JSON.stringify(Order));
+                getData();
+            })
+
+            $('.tbody').on('click','.minus',function () 
+            {
+              var id=$(this).data('id');
+              var qty=parseInt($(this).data('qty'));
+
+              console.log(qty);
+              qty--;
+              var lsd=localStorage.getItem('Order');
+                Order=JSON.parse(lsd);
+                $.each(Order,function (i,v) 
+                {
+                    if( i==id)
+                    {
+                        v.qty=qty;
+                    }
+                    
+                })
+                if(qty<=0)
+                {
+                    Order.splice(id,1);
+                }
+                localStorage.setItem('Order',JSON.stringify(Order));
+                getData();
+            })
+        })
+	</script>
+</head>
+<body>
+  
+  <h2 style="text-align: center; color: purple;">Your Cart</h2>
+   <div class="container-fluid p-0  ">
+   	<div class="row justify-content-center p-3">
+   	<table class="table table-bordered table-hover">
+     	<thead>
+     		<tr>
+     			<th>NO</th>
+     			<th>Name</th>
+     			<th>Price</th>
+     			<th>Qty</th>
+     			<th>Subtotal</th>
+     			<th>Action</th>
+     		</tr>
+     	</thead>
+     	<tbody class="tbody" style="background-color: #f1dae6;"></tbody>
+     </table>
+  		</div>
+   </div>
+   <a href="addtocart.html" class="btn btn-danger mt-4" style="background-color: #1a1a1a; width: 15%; height:5%">Shopping Cart</a>
+</body>
+</html>
